@@ -138,17 +138,3 @@ Feel free to add or modify directories to create additional tests.
 
 
 git commit -m "second commit with structure for test hype MX"
-
-
-dummy_dir
-	a_dir
-	       	test_file1.md
-	b_dir
-		test_file2.md
-	test_file0.md
-index.html
-main.js
-server.js
-
-
-
