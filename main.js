@@ -34,7 +34,7 @@ function directoryToTree(rootPath, maxDepth) {
 // Example 1:
 const result = directoryToTree('dummy_dir/a_dir', 5);
 console.log("---------RESULTADO EJEMPLO 1-----------------------")
-console.log(JSON.stringify(result, null, 2));
+console.log(result);
 
 //Example 2:
 const result2 = directoryToTree('dummy_dir', 5);
