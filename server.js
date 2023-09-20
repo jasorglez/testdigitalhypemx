@@ -63,9 +63,10 @@ const server = http.createServer((req, res) => {
   }
 });
 
-//const PORT = 3000;
 
-//server.listen(PORT, () => {
-//  console.log(`Servidor escuchando en el puerto ${PORT}`);
-//});
+// Obtener el puerto de las variables de entorno o usar un valor predeterminado
+const PORT = process.env.PORT || 3000;
 
+server.listen(PORT, () => {
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
+});
