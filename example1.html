@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejemplo 1</title>
+</head>
+<body>
+  <h1>Ejemplo 1</h1>
+  <pre id="result"></pre>
+
+  <script>
+    fetch('/example1-data') // Nueva ruta para obtener los datos del ejemplo 1
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+      });
+  </script>
+</body>
+</html>
