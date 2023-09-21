@@ -1,77 +1,62 @@
-const http = require('http');
+const express = require('express');
 const fs = require('fs');
 const path = require('path');
 
-// Función para generar la estructura de árbol (directoryToTree)
+const app = express();
+const port = 3000;
+
+app.use(express.static('public'));
+
+app.get('/tree/:example', (req, res) => {
+  const example = req.params.example;
+  let result;
+
+  switch (example) {
+    case 'example1':
+      result = directoryToTree('dummy_dir/a_dir', 5);
+      break;
+    case 'example2':
+      result = directoryToTree('dummy_dir', 5);
+      break;
+    case 'example3':
+      result = directoryToTree('dummy_dir', 1);
+      break;
+    default:
+      result = { error: 'Invalid example' };
+  }
+
+  res.json(result);
+});
+
 function directoryToTree(rootPath, maxDepth) {
   const stats = fs.statSync(rootPath);
   const name = path.basename(rootPath);
-  const relativePath = path.relative(process.cwd(), rootPath);
+  const type = stats.isDirectory() ? 'dir' : 'file';
+  const size = stats.size;
 
-  if (stats.isDirectory() && maxDepth > 0) {
-    const children = fs.readdirSync(rootPath).map((child) => {
-      const childPath = path.join(rootPath, child);
-      return directoryToTree(childPath, maxDepth - 1);
-    });
-
+  if (maxDepth === 0 || !stats.isDirectory()) {
     return {
+      path: rootPath,
       name,
-      path: relativePath,
-      type: 'dir',
-      size: stats.size,
-      children,
-    };
-  } else if (stats.isFile()) {
-    return {
-      name,
-      path: relativePath,
-      type: 'file',
-      size: stats.size,
+      type,
+      size
     };
   }
+
+  const children = fs.readdirSync(rootPath).map(child => {
+    const childPath = path.join(rootPath, child);
+    return directoryToTree(childPath, maxDepth - 1);
+  });
+
+  return {
+    path: rootPath,
+    name,
+    type,
+    size,
+    children
+  };
 }
 
-const server = http.createServer((req, res) => {
-  if (req.url === '/' || req.url === '/index.html') {
-    // Servir la página principal con los botones
-    const indexHtml = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.end(indexHtml);
-  } else if (req.url === '/example1.html' || req.url === '/example2.html' || req.url === '/example3.html') {
-    // Servir los archivos HTML de los ejemplos
-    const exampleHtml = fs.readFileSync(path.join(__dirname, req.url.substring(1)), 'utf8');
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.end(exampleHtml);
-  } else if (req.url === '/example1-data') {
-    // Generar y enviar los datos del ejemplo 1 como texto plano
-    const tree = directoryToTree('dummy_dir/a_dir', 5);
-    const textResponse = JSON.stringify(tree, null, 2); // Convertir a texto con formato
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end(textResponse);
-    console.log("Estoy en la 1")
-  } else if (req.url === '/example2-data') {
-    // Generar y enviar los datos del ejemplo 2 como texto plano
-    const tree = directoryToTree('dummy_dir', 5);
-    const textResponse = JSON.stringify(tree, null, 2); // Convertir a texto con formato
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end(textResponse);
-    console.log("Estoy en la 2")
-  } else if (req.url === '/example3-data') {
-    // Generar y enviar los datos del ejemplo 3 como texto plano
-    const tree = directoryToTree('dummy_dir', 1);
-    const textResponse = JSON.stringify(tree, null, 2); // Convertir a texto con formato
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end(textResponse);
-    console.log("Estoy en la 3")
-  } else {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('Página no encontrada');
-  }
-});
-
-// Obtener el puerto de las variables de entorno o usar un valor predeterminado
-const PORT = process.env.PORT || 3000;
-
-server.listen(PORT, () => {
-  console.log(`Servidor escuchando en el puerto ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });

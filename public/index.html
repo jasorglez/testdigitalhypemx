@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Directory Tree Examples</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #007bff;
+      color: #fff;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    h1 {
+      font-size: 24px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      text-align: center;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to My Test</h1>
+  </header>
+ 
+
+  <div class="example">
+    <h2>Example 1</h2>
+    <button onclick="fetchExample('example1')">Load Example 1</button>
+    <pre id="example1"></pre>
+  </div>
+
+  <div class="example">
+    <h2>Example 2</h2>
+    <button onclick="fetchExample('example2')">Load Example 2</button>
+    <pre id="example2"></pre>
+  </div>
+
+  <div class="example">
+    <h2>Example 3</h2>
+    <button onclick="fetchExample('example3')">Load Example 3</button>
+    <pre id="example3"></pre>
+  </div>
+
+  <footer class="contact-info">
+    <p>Autor: Jose Angel Soriano Gonzalez</p>
+    <p>Code Source: <a href="https://github.com/jasorglez/testdigitalhypemx">https://github.com/jasorglez/testdigitalhypemx</a></p>
+    <p>Page web: <a href="https://jasorglez.github.io/whoiam/">https://jasorglez.github.io/whoiam/</a> Linkedin: <a href="https://www.linkedin.com/in/jose-angel-soriano-ba017123/">https://www.linkedin.com/in/jose-angel-soriano-ba017123/</a></p>
+    <p>Lafayette, Indiana USA and Veracruz MX, Phone USA: +1 (765) 986-9403, Phone Mx: +52 (229) 206 3157</p>
+  </footer>
+
+  <script>
+    function fetchExample(example) {
+      fetch(`/tree/${example}`)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById(example).textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+  </script>
+</body>
+</html>
