@@ -43,29 +43,37 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end(exampleHtml);
   } else if (req.url === '/example1-data') {
-    // Generar y enviar los datos del ejemplo 1
+    // Generar y enviar los datos del ejemplo 1 como un objeto JSON válido
     const tree = directoryToTree('dummy_dir/a_dir', 5);
+    const jsonResponse = {
+      data: tree
+    };
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(tree));
+    res.end(JSON.stringify(jsonResponse));
     console.log("Estoy en la 1")
   } else if (req.url === '/example2-data') {
     // Generar y enviar los datos del ejemplo 2
     const tree = directoryToTree('dummy_dir', 5);
+    const jsonResponse = {
+      data: tree
+    };
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(tree));
+    res.end(JSON.stringify(jsonResponse));
     console.log("Estoy en la 2")
   } else if (req.url === '/example3-data') {
     // Generar y enviar los datos del ejemplo 3
     const tree = directoryToTree('dummy_dir', 1);
+    const jsonResponse = {
+      data: tree
+    };
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(tree));
+    res.end(JSON.stringify(jsonResponse));
     console.log("Estoy en la 3")
   } else {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
     res.end('Página no encontrada');
   }
 });
-
 
 // Obtener el puerto de las variables de entorno o usar un valor predeterminado
 const PORT = process.env.PORT || 3000;
