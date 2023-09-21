@@ -43,31 +43,25 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end(exampleHtml);
   } else if (req.url === '/example1-data') {
-    // Generar y enviar los datos del ejemplo 1 como un objeto JSON válido
+    // Generar y enviar los datos del ejemplo 1 como texto plano
     const tree = directoryToTree('dummy_dir/a_dir', 5);
-    const jsonResponse = {
-      data: tree
-    };
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(jsonResponse));
+    const textResponse = JSON.stringify(tree, null, 2); // Convertir a texto con formato
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end(textResponse);
     console.log("Estoy en la 1")
   } else if (req.url === '/example2-data') {
-    // Generar y enviar los datos del ejemplo 2
+    // Generar y enviar los datos del ejemplo 2 como texto plano
     const tree = directoryToTree('dummy_dir', 5);
-    const jsonResponse = {
-      data: tree
-    };
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(jsonResponse));
+    const textResponse = JSON.stringify(tree, null, 2); // Convertir a texto con formato
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end(textResponse);
     console.log("Estoy en la 2")
   } else if (req.url === '/example3-data') {
-    // Generar y enviar los datos del ejemplo 3
+    // Generar y enviar los datos del ejemplo 3 como texto plano
     const tree = directoryToTree('dummy_dir', 1);
-    const jsonResponse = {
-      data: tree
-    };
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(jsonResponse));
+    const textResponse = JSON.stringify(tree, null, 2); // Convertir a texto con formato
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end(textResponse);
     console.log("Estoy en la 3")
   } else {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
