@@ -47,16 +47,19 @@ const server = http.createServer((req, res) => {
     const tree = directoryToTree('dummy_dir/a_dir', 5);
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(tree));
+    console.log("Estoy en la 1")
   } else if (req.url === '/example2-data') {
     // Generar y enviar los datos del ejemplo 2
     const tree = directoryToTree('dummy_dir', 5);
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(tree));
+    console.log("Estoy en la 2")
   } else if (req.url === '/example3-data') {
     // Generar y enviar los datos del ejemplo 3
     const tree = directoryToTree('dummy_dir', 1);
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(tree));
+    console.log("Estoy en la 3")
   } else {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
     res.end('Página no encontrada');
